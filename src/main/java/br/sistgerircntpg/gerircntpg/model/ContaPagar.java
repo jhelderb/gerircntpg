@@ -13,6 +13,7 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_contas_pagar")
+
 public class ContaPagar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,7 +103,7 @@ public class ContaPagar {
         this.dt_pagam = dt_pagam;
     }
 
-    /**
+/**
     public ContaPagar(String nm_conta, Double vl_conta, Date dt_venci, Double tx_juros, Date dt_pagam) {
         this.nm_conta = nm_conta;
         this.vl_conta = vl_conta;
@@ -110,5 +111,6 @@ public class ContaPagar {
         this.tx_juros = tx_juros;
         this.dt_pagam = dt_pagam;
     }
-     */
+ */
+
 }
