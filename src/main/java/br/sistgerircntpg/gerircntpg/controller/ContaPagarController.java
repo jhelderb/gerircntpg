@@ -27,19 +27,18 @@ public class ContaPagarController {
     @Autowired
     private ContaPagarRepositorio repositorio;
 
-    @GetMapping
+    @GetMapping("/listacontas")
     public List<ContaPagar> listarContas(){
             return repositorio.findAll();
     }
 
-   // @SuppressWarnings("null")
-   // @SuppressWarnings("null")
-    @PostMapping
+    @SuppressWarnings("null")
+    @PostMapping("/incluiconta")
     public ContaPagar adicionar(@RequestBody ContaPagar cntPagar) {
         return repositorio.save(cntPagar);
     }
 
-    @PutMapping
+    @PutMapping("/alteraconta")
     public ContaPagar alterar(@RequestBody ContaPagar cntPagar) {
         if(cntPagar.getId()>0)
             return repositorio.save(cntPagar);
@@ -47,7 +46,7 @@ public class ContaPagarController {
 
     }
 
-    @DeleteMapping
+    @DeleteMapping("/deletaconta")
     public ContaPagar deletar(@RequestBody ContaPagar cntPagar) {
         if(cntPagar.getId()>0)
             repositorio.delete(cntPagar);
