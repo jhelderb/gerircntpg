@@ -5,7 +5,6 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Stack from 'react-bootstrap/Stack'
 
 import AppBar from '../commons/AppBar'
-import Avatar from '../commons/Avatar'
 import Error from '../commons/Error'
 import Loading from '../commons/Loading'
 
@@ -74,7 +73,6 @@ function Content({user}) {
         <div>
             <Card className='m-2'>
                 <Stack direction='horizontal'>
-                    <Avatar url={user.avatarUrl} size={20}/>
                     <Info
                         username={user.username}
                         name={user.name}

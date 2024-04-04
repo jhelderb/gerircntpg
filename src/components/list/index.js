@@ -1,59 +1,80 @@
 import {useNavigate} from 'react-router-dom'
 
-import ListGroup from 'react-bootstrap/ListGroup'
-import Stack from 'react-bootstrap/Stack'
+import { ListGroup, Row, Col } from 'react-bootstrap';
 
 import AppBar from '../commons/AppBar'
-import Avatar from '../commons/Avatar'
 import Error from '../commons/Error'
 import Loading from '../commons/Loading'
 import NoResults from '../commons/NoResults'
 
-import useFetchUsers from './useFetchUsers'
+import useFetchContas from './useFetchContas'
 
-function UserItem({avatarUrl, username, name, onClick}) {
+function Conta({id, nm_conta, vl_conta, dt_venci, tx_juros, dt_pagam, onClick}) {
     return (
-        <ListGroup.Item action onClick={() => onClick(username)}>
-            <Stack direction='horizontal'>
-                <Avatar url={avatarUrl} size={4}/>
-                <div className='p-2'>
-                    <div className='fw-semibold'>{name}</div>
-                    <div className='fw-light'>
-                        @{username}
-                    </div>
-                </div>
-            </Stack>
+       <ListGroup.Item action onClick={() => onClick(id)}>
+            <Row>
+            <Col xs={2}>
+              <strong>{id}</strong>
+            </Col>
+            <Col xs={2}>
+              <p>{nm_conta}</p>
+            </Col>
+            <Col xs={2}>
+              <p>{vl_conta}</p>
+            </Col>
+            <Col xs={2}>
+              <p>{dt_venci}</p>
+            </Col>
+            <Col xs={2}>
+              <p>{tx_juros}</p>
+            </Col>
+            <Col xs={2}>
+              <p>{dt_pagam}</p>
+            </Col>
+            </Row>
         </ListGroup.Item>
     )
 }
 
 function CntListScreen() {
     const navigate = useNavigate()
-    const [loading, users, error] = useFetchUsers()
+    const [loading, contas, error] = useFetchContas()
     return <CntList
         loading={loading}
-        users={users}
+        contas={contas}
         error={error}
-        onItemClick={username => navigate(username)}
+        onItemClick={id => navigate(id)}
     />
 }
 
-function CntList({loading, users, error, onItemClick}) {
-    const List = ({users, onItemClick}) => (
-        users.length === 0 ? <NoResults/> : <ListGroup>
+function CntList({loading, contas, error, onItemClick}) {
+    const List = ({contas, onItemClick}) => (
+        contas.length === 0 ? <NoResults/> : <ListGroup>
+    <ListGroup.Item variant="primary">
+        <Row>
+          <Col xs={2}><strong>Id</strong></Col>
+          <Col xs={2}><strong>Conta</strong></Col>
+          <Col xs={2}><strong>Valor</strong></Col>
+          <Col xs={2}><strong>Vencimento</strong></Col>
+          <Col xs={2}><strong>Juros</strong></Col>
+          <Col xs={2}><strong>Pagamento</strong></Col>
+        </Row>
+    </ListGroup.Item>
             {
-                users.map(user => <UserItem
-                    key={user.id}
-                    avatarUrl={user.avatarUrl}
-                    username={user.username}
-                    name={user.name}
+                contas.map(conta => <Conta
+                    id={conta.id}
+                    nm_conta = {conta.nm_conta}
+                    vl_conta = {conta.vl_conta}
+                    dt_venci = {conta.dt_venci}
+                    tx_juros = {conta.tx_juros}
+                    dt_pagam = {conta.dt_pagam}
                     onClick={onItemClick}
                 />)
             }
         </ListGroup>
     )
 
-    const Body = () => (error ? <Error message={error.message}/> : <List users={users} onItemClick={onItemClick}/>)
+    const Body = () => (error ? <Error message={error.message}/> : <List contas={contas} onItemClick={onItemClick}/>)
 
     return (
         <div>

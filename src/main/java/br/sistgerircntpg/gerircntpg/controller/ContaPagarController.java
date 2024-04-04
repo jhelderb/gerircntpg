@@ -32,7 +32,7 @@ public class ContaPagarController {
             return repositorio.findAll();
     }
 
-    @SuppressWarnings("null")
+    //@SuppressWarnings("null")
     @PostMapping("/incluiconta")
     public ContaPagar adicionar(@RequestBody ContaPagar cntPagar) {
         return repositorio.save(cntPagar);
