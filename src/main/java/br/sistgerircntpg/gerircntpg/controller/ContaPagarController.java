@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -47,11 +47,9 @@ public class ContaPagarController {
     }
 
     @DeleteMapping("/deletaconta")
-    public ContaPagar deletar(@RequestBody ContaPagar cntPagar) {
-        if(cntPagar.getId()>0)
-            repositorio.delete(cntPagar);
+    public ContaPagar deletar(Long id) {
+         repositorio.deleteById(id);
         return null;
-
     }
 
 }

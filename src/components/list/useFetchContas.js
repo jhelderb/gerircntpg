@@ -22,7 +22,6 @@ function fetchcontasCall(onSuccess, onError) {
     axios.get('http://localhost:8080/contas/listacontas')
         .then(response => onSuccess(mapResponse(response)))
         .catch(error => {
-            console.error('Erro ao fazer requisição:', error);
             onError(mapError(error));
         });
 }

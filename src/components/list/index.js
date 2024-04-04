@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom'
-
-import { ListGroup, Row, Col } from 'react-bootstrap';
+import axios from 'axios'
+import { ListGroup, Row, Col, Button } from 'react-bootstrap';
 
 import AppBar from '../commons/AppBar'
 import Error from '../commons/Error'
@@ -13,9 +13,6 @@ function Conta({id, nm_conta, vl_conta, dt_venci, tx_juros, dt_pagam, onClick}) 
     return (
        <ListGroup.Item action onClick={() => onClick(id)}>
             <Row>
-            <Col xs={2}>
-              <strong>{id}</strong>
-            </Col>
             <Col xs={2}>
               <p>{nm_conta}</p>
             </Col>
@@ -31,10 +28,25 @@ function Conta({id, nm_conta, vl_conta, dt_venci, tx_juros, dt_pagam, onClick}) 
             <Col xs={2}>
               <p>{dt_pagam}</p>
             </Col>
+            <Col xs={2}>
+              <Button variant="danger" onClick={() => handleExcluirItem(id)}>Excluir</Button>
+            </Col>
             </Row>
         </ListGroup.Item>
     )
 }
+
+  // Função para excluir um item da lista
+  const handleExcluirItem = (id) => {
+    // Chamar o serviço para excluir o item com o ID fornecido
+    axios.delete(`http://localhost:8080/contas/deletaconta?id=${id}`)
+      .then(response => {
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error(`Erro ao excluir o item com ID ${id}:`, error);
+      });
+  };
 
 function CntListScreen() {
     const navigate = useNavigate()
@@ -52,12 +64,12 @@ function CntList({loading, contas, error, onItemClick}) {
         contas.length === 0 ? <NoResults/> : <ListGroup>
     <ListGroup.Item variant="primary">
         <Row>
-          <Col xs={2}><strong>Id</strong></Col>
           <Col xs={2}><strong>Conta</strong></Col>
           <Col xs={2}><strong>Valor</strong></Col>
           <Col xs={2}><strong>Vencimento</strong></Col>
           <Col xs={2}><strong>Juros</strong></Col>
           <Col xs={2}><strong>Pagamento</strong></Col>
+          <Col xs={2}></Col> {/* Coluna extra para o botão de exclusão */}
         </Row>
     </ListGroup.Item>
             {
